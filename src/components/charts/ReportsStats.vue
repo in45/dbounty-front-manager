@@ -4,7 +4,7 @@
             <apexchart type="pie" width="420" :options="chartOptions" :series="series" v-if="series.length"></apexchart>
         </div>
         <div class="col-xl-6">
-            <apexchart type="donut" width="390" :options="chartOptions2" :series="series2" v-if="series2.length"></apexchart>
+            <apexchart type="donut" width="380" :options="chartOptions2" :series="series2" v-if="series2.length"></apexchart>
         </div>
     </div>
 

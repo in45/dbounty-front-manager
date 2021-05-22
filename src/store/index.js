@@ -4,7 +4,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-
+       company:{
+    balance:12000,
+         }
 
     },
     mutations: { //sync

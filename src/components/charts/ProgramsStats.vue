@@ -9,19 +9,19 @@
         data(){
             return{
                 series: [{
-                    name: 'Net Profit',
-                    data: [44, 55, 57, 56, 61, 58, 63, 60, 66]
+                    name: '',
+                    data: []
                 }, {
-                    name: 'Revenue',
-                    data: [76, 85, 101, 98, 87, 105, 91, 114, 94]
-                }, {
-                    name: 'Free Cash Flow',
-                    data: [35, 41, 36, 26, 45, 48, 52, 53, 41]
+                    name: '',
+                    data: []
                 }],
                 chartOptions: {
                     chart: {
                         type: 'bar',
                         height: 350
+                    },
+                    noData: {
+                        text: 'Loading',
                     },
                     title: {
                         text: 'Programs Stats',
@@ -49,24 +49,17 @@
                         width: 2,
                         colors: ['transparent']
                     },
-                    xaxis: {
-                        categories: ['Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
-                    },
                     yaxis: {
-                        title: {
-                            text: '$ (thousands)'
-                        }
+                        labels: {
+                            formatter: function (val) {
+                                return val.toFixed(0)
+                            }
+                        },
                     },
                     fill: {
                         opacity: 1
                     },
-                    tooltip: {
-                        y: {
-                            formatter: function (val) {
-                                return "$ " + val + " thousands"
-                            }
-                        }
-                    }
+
                 },
             }
         },
@@ -80,6 +73,22 @@
                     .then(response => {
                         let data  = response.data;
                         console.log("programs stats",data)
+                        let labels = []
+                        let users_count = []
+                        let reports_count = []
+
+                        response.data.forEach(function(element) {
+
+                            labels.push(element.name)
+                            users_count.push(element.users_count)
+                            reports_count.push(element.reports_count)
+                        })
+
+                        this.$set(this.series, 0, {name: "users count", data: users_count})
+                        this.$set(this.series, 1, {name: "reports count", data: reports_count})
+                        this.chartOptions = {...this.chartOptions, ...{
+                                labels: labels
+                            }}
                     })
                     .catch(error => {
                         console.log(error)

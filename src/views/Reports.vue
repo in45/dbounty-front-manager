@@ -149,7 +149,7 @@
 <script>
     import simplebar from 'simplebar-vue';
     import 'simplebar/dist/simplebar.min.css';
-    import { vuln_Category } from "../assets/helpers/vuln_category";
+    import { vuln_Category } from "@/assets/helpers/vuln_category";
     import EditReport from "@/components/EditReport";
     import ReportMessages from "@/components/ReportMessages";
     export default {

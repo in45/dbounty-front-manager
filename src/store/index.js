@@ -5,18 +5,22 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
        company:{
-    balance:12000,
-         }
+           id:'24',
+           balance:12000,
+         },
+        manager:{
+
+        }
 
     },
     mutations: { //sync
-        // user(state,user){
-        //     state.user=user;
-        // },
-        //store.commit('incrementScore',30)
-        // incrementScore(state,pts){
-        //     state.user.score+=pts;
-        // },
+        me(state,manager){
+            state.manager=manager;
+        },
+       // store.commit('mycompany',30)
+        mycompany(state,company){
+            state.company=company;
+        },
 
 
     },

@@ -34,18 +34,27 @@ const routes = [
                     requiresAuth: true
                 },
             },
+
             {
-                path: '/profile',
-                name: 'Profile',
-                component: () => import(/* webpackChunkName: "Profile" */ '@/views/Profile'),
+                path: '/programs',
+                name: 'Programs',
+                component: () => import(/* webpackChunkName: "Programs" */ '@/views/Programs'),
                 meta: {
                     requiresAuth: true
                 },
             },
             {
-                path: '/programs',
-                name: 'Programs',
-                component: () => import(/* webpackChunkName: "Programs" */ '@/views/Programs'),
+                path: '/programs/add',
+                name: 'NewProgram',
+                component: () => import(/* webpackChunkName: "NewProgram" */ '@/components/NewProgram'),
+                meta: {
+                    requiresAuth: true
+                },
+            },
+            {
+                path: '/programs/:id/edit',
+                name: 'EditProgram',
+                component: () => import(/* webpackChunkName: "EditProgram" */ '@/components/EditProgram'),
                 meta: {
                     requiresAuth: true
                 },
@@ -59,21 +68,14 @@ const routes = [
                 },
             },
             {
-                path: '/users',
-                name: 'Users',
-                component: () => import(/* webpackChunkName: "Users" */ '@/views/Users'),
+                path: '/company',
+                name: 'ProfilCompany',
+                component: () => import(/* webpackChunkName: "ProfilCompany" */ '@/views/ProfilCompany'),
                 meta: {
                     requiresAuth: true
                 },
             },
-            {
-                path: '/users/:id',
-                name: 'ProfilUser',
-                component: () => import(/* webpackChunkName: "ProfilUser" */ '@/views/ProfilUser'),
-                meta: {
-                    requiresAuth: true
-                },
-            },
+
             {
                 path: '/reports',
                 name: 'Reports',

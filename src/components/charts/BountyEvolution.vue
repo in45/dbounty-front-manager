@@ -55,7 +55,7 @@
                             },
                         },
 
-                        colors: ['#556ee6'],
+                        colors: ['#FFFF99'],
                         stroke: {
                             curve: 'smooth',
                             width: 3,
@@ -71,7 +71,7 @@
         methods:{
             loadEvolution() {
                 this.$http
-                    .get('companies/24/bounty_stats')
+                    .get('companies/'+this.$store.state.company.id+'/bounty_stats')
                     .then(response => {
                         let evolution  = response;
                         let result = {}

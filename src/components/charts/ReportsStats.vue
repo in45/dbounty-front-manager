@@ -79,7 +79,7 @@
         methods:{
             loadReportsStats() {
                 this.$http
-                    .get('companies/24/reports_stats')
+                    .get('companies/'+this.$store.state.company.id+'/reports_stats')
                     .then(response => {
                         let data  = response.data;
                         console.log("reports status",data.status)

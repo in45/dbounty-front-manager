@@ -8,23 +8,32 @@
             <b-navbar-nav class=" w-80 ">
                 <b-nav-item  :to="{name: 'Dashboard'}" >Dashboard</b-nav-item>
                 <b-nav-item  :to="{name: 'Programs'}"  >Programs</b-nav-item>
-                <b-nav-item  :to="{name: 'Users'}">Researchers</b-nav-item>
+                <b-nav-item  :to="{name: 'Reports'}">Reports</b-nav-item>
                 <b-nav-item  :to="{name: 'Hacktivity'}">Hacktivity</b-nav-item>
             </b-navbar-nav>
+
             <b-navbar-nav class="ml-auto">
+                <b-nav-item right>
+                    <button class="add"  @click="$router.push({name:'NewProgram'})">New Program</button>
+                </b-nav-item>
                 <b-nav-item-dropdown right>
                     <!-- Using 'button-content' slot -->
                     <template #button-content>
-                        <b-avatar></b-avatar>
+                        <b-avatar :src="$store.state.company.logo"></b-avatar>
                     </template>
-                    <b-dropdown-item :to="{name: 'Profile', query: { n: '1' } }">Profile</b-dropdown-item>
-                    <b-dropdown-item :to="{name: 'Profile', query: { n: '2' } }">My Programs</b-dropdown-item>
-                    <b-dropdown-item :to="{name: 'Profile', query: { n: '3' } }">My Reports</b-dropdown-item>
+                    <b-dropdown-item href="" v-b-modal.modal-profil>Profile</b-dropdown-item>
+                    <b-dropdown-item href="" v-b-modal.profil-company>My Company</b-dropdown-item>
+                    <b-dropdown-item href="" v-b-modal.company-managers>Managers</b-dropdown-item>
                     <b-dropdown-item href="#">Logout</b-dropdown-item>
                 </b-nav-item-dropdown>
+
             </b-navbar-nav>
 
+
         </b-collapse>
+        <profil/>
+        <company/>
+        <managers/>
     </b-navbar>
 
 
@@ -34,19 +43,38 @@
 <script>
 
 
+    import Profil from "@/components/profil";
+    import Company from "@/components/company";
+    import Managers from "@/components/managers";
     export default {
         name: "NavBar",
+        components: {Managers, Company, Profil},
         data(){
             return{
-                windowWidth: window.innerWidth,
-                isOpen:false,
+
             }
+
+        },
+        mounted () {
+            this.me();
 
         },
         methods:{
 
-
+            me() {
+                this.$http
+                    .get('me')
+                    .then(response =>{
+                        this.$store.commit('me',response.data)
+                        this.$store.commit('mycompany',response.data.company.company)
+                    })
+                    .catch(error => {
+                            console.log(error)
+                        }
+                    )
             }
+        }
+
         }
 
 </script>
@@ -78,6 +106,15 @@
     /deep/ .dropdown-toggle::after{
         display: none!important;
     }
-
+    .add {
+        color: white;
+        padding: 8px;
+        border-radius: 12px;
+        background: #0EC9AC;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.4s;
+    }
 
 </style>

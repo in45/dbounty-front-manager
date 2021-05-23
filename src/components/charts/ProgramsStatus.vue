@@ -9,12 +9,15 @@
         data(){
             return{
                 series: [{
-                    data: [400, 430, 448, 470, 540, 580, 690, 1100, 1200, 1380]
+                    data: []
                 }],
                 chartOptions: {
                     chart: {
                         type: 'bar',
                         height: 350
+                    },
+                    noData: {
+                        text: 'Loading',
                     },
                     title: {
                         text: 'Programs Status',
@@ -53,7 +56,7 @@
         methods:{
             loadProgramsStatus() {
                 this.$http
-                    .get('companies/24/programs_status')
+                    .get('companies/'+this.$store.state.company.id+'/programs_status')
                     .then(response => {
                         console.log("programs status",response.data)
                         let status = []

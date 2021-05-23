@@ -17,35 +17,41 @@
                             <h6>{{program.reports_count}}</h6>
                         </li>
                         <li class="col-xl-3 col-md-6 col-sm-6 w-50 text-center">
-                            <p class="mb-0">Scopes</p>
-                            <h6>45</h6>
-                        </li>
-                        <li class="col-xl-3 col-md-6 col-sm-6 w-50 text-center">
                             <p class="mb-0">Users</p>
                             <h6>{{program.users_count}}</h6>
                         </li>
-                        <li class="col-xl-3 col-md-6 col-sm-6 w-50 text-center">
+                        <li class="col-xl-4 col-md-6 col-sm-6 w-50 text-center">
                             <p class="mb-0">Bounty Range</p>
                             <h6>{{program.min_bounty+' - '+program.max_bounty}}</h6>
                         </li>
 
                     </ul>
+
                 </div>
                 <div class="col-xl-3 p-0 border-left">
                     <p class="m-2">Begin At : {{new Date(program.begin_at).toLocaleString()}}</p>
                     <p class="m-2">Finish At : {{new Date(program.finish_at).toLocaleString()}}</p>
                     <b-badge pill class="m-2" variant="info">Managed By DBounty</b-badge><br/>
                     <b-badge pill class="m-2" variant="info">{{program.type}}</b-badge>
-                </div>
+
+                    </div>
             </div>
         </div>
         <div class="row content mx-0 mb-4 p-2" style="border-radius: 0 0 12px 12px;">
             <div class="col-xl-9">
+
                 <b-tabs pills justified content-class="pt-3">
                     <b-tab  class="border-0">
                         <template v-slot:title>
                             <span class=" d-sm-inline-block ">Program Details</span>
                         </template>
+                        <div class="row mx-0 mb-2">
+                            <div class="col-xl-6 ml-auto text-right">
+                                <button class="btn btn-info p-2 mr-2 mb-2" role="button"  @click="$router.push({name:'ProgramReports',params:{id:program.id}})">View Reports</button>
+                                <button class="btn btn-info p-2 mb-2" role="button"  @click="$router.push({name:'EditProgram',params:{id:program.id}})">Edit</button>
+
+                            </div>
+                              </div>
                         <div role="tablist">
                             <b-card no-body class="mb-1">
                                 <b-card-header header-tag="header" role="tab" v-b-toggle.info style="cursor: pointer">
@@ -54,18 +60,10 @@
                                         <strong>Program Info</strong></h6>
                                 </b-card-header>
                                 <b-collapse id="info" visible accordion="my-accordion" role="tabpanel">
+
                                     <b-card-body v-if="program.description">
                                         <b-card-text v-html="JSON.parse(program.description).info">
                                             {{JSON.parse(program.description).info}}
-                                            <!--                                                    <ul class="m-4">-->
-                                            <!--                                                        <li>Lorem Ipsum is not simply random text. It has roots in a piece</li>-->
-                                            <!--                                                        <li>Lorem Ipsum is not simply random text. It has roots in a piece</li>-->
-                                            <!--                                                        <li>Lorem Ipsum is not simply random text. It has roots in a piece</li>-->
-                                            <!--                                                        <li>Lorem Ipsum is not simply random text. It has roots in a piece</li>-->
-                                            <!--                                                        <li>Lorem Ipsum is not simply random text. It has roots in a piece</li>-->
-                                            <!--                                                        <li>Lorem Ipsum is not simply random text. It has roots in a piece</li>-->
-
-                                            <!--                                                    </ul>-->
 
                                         </b-card-text>
                                     </b-card-body>
@@ -109,7 +107,7 @@
                     </b-tab>
                     <b-tab  class="border-0">
                         <template v-slot:title>
-                            <span class=" d-sm-inline-block ">Hall Of Fame</span>
+                            <span class=" d-sm-inline-block ">Registred Users</span>
                         </template>
                         <div>
                             <table class="table table-centered table-nowrap text-center text-white">
@@ -141,52 +139,7 @@
                             </table>
                         </div>
                     </b-tab>
-                            <b-tab  class="border-0">
-                                <template v-slot:title>
-                                    <span class=" d-sm-inline-block ">Submit Report</span>
-                                </template>
-                                <div>
-                                    <p>You're about to submit a report to Avalanche General. Provide as much information as possible about the potential issue you have discovered. The more information you provide, the quicker Avalanche General will be able to validate the issue. If you haven't yet, please remember to review our Policy and Disclosure Guidelines.</p>
-                                    <form id="form" method="POST" @submit.prevent="handleSubmit">
-                                        <div class="form-group mt-3 mb-0">
-                                            <label class="pb-2"> Vulnerability Title :</label>
-                                            <b-form-input type="text" placeholder="Add your vulnerability" ></b-form-input>
-                                        </div>
-                                        <div class="form-group mt-3 mb-0">
-                                            <label class="pb-2"> Target :</label>
-                                            <b-form-select placeholder="Add your Target" :options="['a','b','c']"></b-form-select>
-                                        </div>
-                                        <div class="form-group my-3 ">
-                                            <label class="pb-2"> Vulnerability Category :</label>
-                                            <b-form-select placeholder=" select Type" :options="['a','b','c']"></b-form-select>
-                                        </div>
-                                        <div class="form-group my-3 ">
-                                            <label class="pb-2"> Severity Level :</label>
-                                            <calcul-c-v-s-s3/>
-                                        </div>
-                                        <div class="form-group my-3 ">
-                                            <label class="pb-2"> Vulnerability Details :</label>
-                                            <vue-editor v-model="content" ></vue-editor>
-                                        </div>
-                                        <div class="form-group my-3 ">
-                                            <label class="pb-2"> Validations Steps :</label>
-                                            <vue-editor v-model="content"></vue-editor>
-                                        </div>
-                                        <div class="form-group my-3 ">
-                                            <label class="pb-2">File Upload :</label>
-                                            <b-form-file multiple="true"></b-form-file>
-                                        </div>
-                                        <p class="my-3 text-muted">By clicking 'Submit Report' or 'Publish', you indicate that you have read the Program info, agree to the Terms & Conditions and acknowledge that you have read Privacy Policy</p>
-                                        <div class="row mx-0 my-3">
-                                            <b-form-input type="button" class="btn btn-secondary col-1 " value="Save"></b-form-input>
-                                            <b-form-input type="submit" class="btn btn-primary col-1 ml-auto " value="Submit"></b-form-input>
-                                        </div>
 
-                                    </form>
-                                </div>
-
-
-                            </b-tab>
                         </b-tabs>
             </div>
             <div class="col-xl-3 reward">
@@ -221,17 +174,10 @@
 </template>
 
 <script>
-    import { VueEditor } from "vue2-editor";
-    import CalculCVSS3 from "@/components/calculCVSS3";
     export default {
         name: "ProfilProgram",
-        components: {
-            CalculCVSS3,
-            VueEditor
-        },
         data() {
             return {
-                content: "<h1>Some initial content</h1>",
                 program:{
                     name:'',
                     company:{}
@@ -305,6 +251,7 @@
         background-color: #0EC9AC;
         border-radius: 4px;
     }
+
     /deep/ .nav-pills .nav-link{
         color: white;
         border-radius: 0;
@@ -325,7 +272,7 @@
         padding: 8px;
         color: #ddd;
     }
-    .reward{
+    .reward,.prio{
         border: solid 0.5px #bbb;
         height: fit-content;
     }
@@ -333,7 +280,8 @@
         background-color: inherit;
     }
     .card-header{
-        border: #ffffff;
+        border:1px solid #ffffff;
+        border-radius: 8px;
     }
     /deep/.ql-toolbar.ql-snow{
         background-color: #fff;

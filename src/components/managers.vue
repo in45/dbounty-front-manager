@@ -61,7 +61,7 @@
         },
         changeRole(manager_address,role){
             this.$http
-                .post('companies/'+this.$store.state.company.id+'/managers/'+manager_address,{'role':role})
+                .post('managers/'+manager_address,{'role':role})
                 .then(response => {
                     console.log(response.data);
                     this.$alertify.success("L'opération a réussi :)")

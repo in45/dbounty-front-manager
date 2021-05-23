@@ -47,7 +47,7 @@
                         </template>
                         <div class="row mx-0 mb-2">
                             <div class="col-xl-6 ml-auto text-right">
-                                <button class="btn btn-info p-2 mr-2 mb-2" role="button"  @click="$router.push({name:'ProgramReports',params:{id:program.id}})">View Reports</button>
+                                <button class="btn btn-info p-2 mr-2 mb-2" role="button"  @click="$router.push({name:'ProgramReports',params:{id:program.id}})" v-if="program.reports_count">View Reports</button>
                                 <button class="btn btn-info p-2 mb-2" role="button"  @click="$router.push({name:'EditProgram',params:{id:program.id}})">Edit</button>
 
                             </div>

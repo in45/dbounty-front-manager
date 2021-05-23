@@ -15,9 +15,9 @@
             <div class="col-xl-7 m-auto">
                 <div class="float-right">
                     <b-badge class="p-1" pill variant="info">{{data.status}}</b-badge>
-                    <i class="flaticon-skull link mt-2 text-white ml-2" @click="$router.push({name:'ProgramReports',params:{id:program.id}})" title="view report"></i>
+                    <i class="flaticon-skull link mt-2 text-white ml-2" @click="$router.push({name:'ProgramReports',params:{id:data.prog_id}, query: { report: data }})" title="view report"></i>
                 </div>
-                <h6 class="mt-1 link"  @click="$router.push({name:'ProgramReports',params:{id:program.id}})" >{{data.title}}</h6>
+                <h6 class="mt-1 link"  @click="$router.push({name:'ProgramReports',params:{id:data.prog_id}})" >{{data.title}}</h6>
                 <h6 v-if="data.vuln_id" >{{data.vuln.name}}</h6>
                 <h6  v-else>{{data.vuln_name}}</h6>
                 <p>{{new Date(data.created_at).toLocaleString()}}</p>
@@ -57,7 +57,7 @@
         methods: {
             getHacktivities(page) {
                 this.$http
-                    .get('reports?page=' + page)
+                    .get('companies/'+this.$store.state.company.id+'/reports?page=' + page)
                     .then(response => {
                         console.log(response.data)
                         this.hacktivities = response.data.data;

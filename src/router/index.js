@@ -68,6 +68,14 @@ const routes = [
                 },
             },
             {
+                path: '/programs/:id/reports',
+                name: 'ProgramReports',
+                component: () => import(/* webpackChunkName: "Programs" */ '@/views/ProgramReports'),
+                meta: {
+                    requiresAuth: true
+                },
+            },
+            {
                 path: '/company',
                 name: 'ProfilCompany',
                 component: () => import(/* webpackChunkName: "ProfilCompany" */ '@/views/ProfilCompany'),

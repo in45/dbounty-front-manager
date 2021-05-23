@@ -44,6 +44,11 @@
         components: {
             VueEditor
         },
+        data(){
+            return{
+                categories:[]
+            }
+        }
     }
 </script>
 

@@ -40,7 +40,7 @@
 
                                 <div class="row">
                                     <span class="range">{{data.min_bounty+' - '+data.max_bounty}}</span>
-                                    <button class="btn ml-auto"  @click="$router.push({name:'ProfilProgram',params:{id:data.id}})">Open</button>
+                                    <button class="btn ml-auto"  @click="$router.push({name:'ProfilProgram',params:{id:data.id}})">Access</button>
                                 </div>
                             </div>
                         </div>

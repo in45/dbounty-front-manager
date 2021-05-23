@@ -152,7 +152,7 @@
     import EditReport from "@/components/EditReport";
     import ReportMessages from "@/components/ReportMessages";
     export default {
-        name: "Reports",
+        name: "ProgramReports",
         components: {
             ReportMessages,
             EditReport,
@@ -175,11 +175,12 @@
         },
         created() {
             this.getReports(1)
+            if (this.$route.query.report) this.selected_report = this.$route.query.report
         },
         methods: {
             getReports(page) {
                 this.$http
-                    .get('companies/'+this.$store.state.company.id+'/reports?page=' + page)
+                    .get('programs/'+this.$route.params.id+'/reports?page=' + page)
                     .then(response => {
                         console.log(response.data)
                         this.reports = response.data.data;

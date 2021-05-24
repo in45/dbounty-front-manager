@@ -27,6 +27,25 @@
                 </table>
 
         </div>
+        <div class="row m-4" >
+            <b-input-group>
+                <template #append style="height: 35px" >
+                    <b-input-group-text class="btn btn-primary submit ">Add manager</b-input-group-text>
+                </template>
+                <b-form-input
+
+                        type="text" class="form-control"
+                        placeholder="Enter new Email"
+                        v-model="manager_email" @keyup.enter="handleSubmit"
+                        :class="{ 'is-invalid': typesubmit && $v.manager_email.$error }">
+                </b-form-input>
+                <div v-if="typesubmit && $v.manager_email.$error"
+                     class="invalid-feedback">
+                    <span v-if="!$v.manager_email.email">Email Invalid</span>
+                </div>
+            </b-input-group>
+
+        </div>
     </b-modal>
 </template>
 
@@ -39,12 +58,13 @@
         data(){
             return{
                 managers: [],
-                email: ''
+                typesubmit:false,
+                manager_email: ''
             }
         },
         validations: {
 
-                email: {email},
+            manager_email: {email},
         },
 
     methods: {
@@ -56,7 +76,7 @@
             if (this.$v.$invalid) {
                 return;
             }
-            this.edit();
+            this.addManager();
 
         },
         changeRole(manager_address,role){
@@ -79,6 +99,17 @@
                     this.managers = response.data;
 
 
+                })
+                .catch(error => {
+                        console.log(error)
+                    }
+                )
+        },
+        addManager(){
+            this.$http
+                .post('companies/'+this.$store.state.company.id+'/managers',{'manager_email':this.manager_email})
+                .then(response => {
+                    this.managers.push(response.data);
                 })
                 .catch(error => {
                         console.log(error)

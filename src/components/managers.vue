@@ -1,6 +1,6 @@
 <template>
-    <b-modal id="company-managers"   title="Company Managers" ref="modal"  title-class="font-20"
-             hide-footer hide-header @shown="getManagers" >
+    <b-modal id="company-managers"  size="lg"  title="Company Managers" ref="modal"  title-class="font-20"
+             hide-footer hide-header @shown="create" >
 
         <div class="row m-4">
 
@@ -9,8 +9,8 @@
                     <thead>
                     <tr class="text-center">
                         <td></td>
-                        <td>username</td>
-                        <td>role</td>
+                        <td class="text-xl-left">manager</td>
+                        <td >role</td>
                     </tr>
                     </thead>
                     <tbody>
@@ -18,8 +18,8 @@
                         <td data-label="#">
                             <b-avatar :src="data.manager.avatar"></b-avatar>
                         </td>
-                        <td data-label="Username ">{{data.manager.username}}</td>
-                        <td data-label="Role " >
+                        <td data-label="Username " class="text-xl-left">{{data.manager.username}}</td>
+                        <td data-label="Role " style="max-width: 60px">
                             <b-form-select @change="changeRole(data.manager_address,data.manager.role)" v-model="data.manager.role" :options="['sysalpha', 'sysbeta']" ></b-form-select>
                         </td>
                     </tr>
@@ -27,31 +27,42 @@
                 </table>
 
         </div>
-        <div class="row m-4" >
-            <b-input-group>
-                <template #append style="height: 35px" >
-                    <b-input-group-text class="btn btn-primary submit ">Add manager</b-input-group-text>
-                </template>
-                <b-form-input
+        <hr class="bg-white"/>
+        <div class="form-group mx-4">
+            <label>Or add new manager</label>
+            <div class="row my-3 mx-0" >
 
-                        type="text" class="form-control"
-                        placeholder="Enter new Email"
-                        v-model="manager_email" @keyup.enter="handleSubmit"
-                        :class="{ 'is-invalid': typesubmit && $v.manager_email.$error }">
+
+                <b-form-input type="text" class="form-control col-xl-7 mb-2"
+                              placeholder="Enter Email to invite new manager"
+                              v-model="new_manager.manager_email"
+                              :class="{ 'is-invalid': typesubmit && $v.new_manager.manager_email.$error }">
                 </b-form-input>
-                <div v-if="typesubmit && $v.manager_email.$error"
+                <b-form-select  v-model="new_manager.manager_role" class="col-xl-2 mb-2"
+                                :class="{ 'is-invalid': typesubmit && $v.new_manager.manager_role.$error }">
+                    <b-form-select-option value="" disabled selected>Role</b-form-select-option>
+                    <b-form-select-option value="sysalpha">SysAlpha</b-form-select-option>
+                    <b-form-select-option value="sysbeta">SysBeta</b-form-select-option>
+                </b-form-select>
+                <div v-if="typesubmit && ($v.new_manager.manager_email.$error || $v.new_manager.manager_role.$error)"
                      class="invalid-feedback">
-                    <span v-if="!$v.manager_email.email">Email Invalid</span>
+                    <span v-if="!$v.new_manager.manager_email.required">Email Required</span><br/>
+                    <span v-if="!$v.new_manager.manager_role.required">Role Required</span><br/>
+                    <span v-if="!$v.new_manager.manager_email.email">Email Invalid</span>
                 </div>
-            </b-input-group>
 
+
+                <button class="btn btn-primary submit col-xl-2 ml-auto mb-2" @click="handleSubmit">Add manager</button>
+
+            </div>
         </div>
+
     </b-modal>
 </template>
 
 <script>
 
-    import {email} from "vuelidate/lib/validators";
+    import {email,required} from "vuelidate/lib/validators";
 
     export default {
         name: "Managers",
@@ -59,15 +70,32 @@
             return{
                 managers: [],
                 typesubmit:false,
-                manager_email: ''
+                new_manager:{
+                    manager_email: '',
+                    manager_role:''
+                }
+
             }
         },
         validations: {
+            new_manager:{
+                manager_email: {required,email},
+                manager_role: {required},
 
-            manager_email: {email},
+            }
+
         },
 
     methods: {
+            create(){
+                this.new_manager={
+                    manager_email: '',
+                        manager_role:''
+                }
+                this.typesubmit = false
+
+                this.getManagers()
+            },
         handleSubmit() {
             this.typesubmit = true;
 
@@ -107,7 +135,7 @@
         },
         addManager(){
             this.$http
-                .post('companies/'+this.$store.state.company.id+'/managers',{'manager_email':this.manager_email})
+                .post('companies/'+this.$store.state.company.id+'/invite_manager',this.new_manager)
                 .then(response => {
                     this.managers.push(response.data);
                 })

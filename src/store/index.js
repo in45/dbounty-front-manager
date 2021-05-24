@@ -5,7 +5,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
        company:{
-           id:'24',
+           id:'27',
            balance:12000,
          },
         manager:{

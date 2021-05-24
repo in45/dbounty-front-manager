@@ -3,16 +3,21 @@
         <div class="col-xl-10 m-auto ">
         <div class="card my-5">
             <div class="row m-0">
-                <div class="col-xl-4 border-right">
+                <div class="col-xl-4 col-md-4 border-right border-bottom">
                     <div class="row m-0 pt-2 pb-3">
-                        <div class="col-5 ">
-                            <b-form-select :options="status" size="sm"></b-form-select>
+                        <div class="col-5 my-auto">
+                            <b-form-checkbox v-model="filtre_type" @change="getReports(1)" switch size="sm">Assigned to me</b-form-checkbox>
                         </div>
                         <div class="col-5  ml-auto">
-                            <b-form-select :options="dates" size="sm"></b-form-select>
+                            <b-form-select v-model="filtre_status" size="sm">
+                                <b-form-select-option value="" disabled selected>Status</b-form-select-option>
+                                <b-form-select-option v-for="s in status" :value="s" :key="s">{{s}}</b-form-select-option>
+                                <b-form-select-option value="">all</b-form-select-option>
+                            </b-form-select>
                         </div>
                     </div>
-                    <simplebar style="max-height: 600px;padding-right: 12px;padding-left: 12px;">
+                    <simplebar style="max-height: 600px;min-height: 600px;padding-right: 12px;padding-left: 12px;" data-simplebar-auto-hide="false">
+                        <div  v-if="reports.length && is_load">
                         <div class="card report  mb-3"  :class=" {'selected': selected_report.id == data.id}" v-for="data in reports" v-bind:key="data.id" @click="selected_report = data">
                             <div class="card-body ">
                                 <h6 class="link  font-size-13 link">{{data.title}}</h6>
@@ -22,32 +27,34 @@
                                 <b-badge class="float-right" variant="info">{{data.status}}</b-badge>
                             </div>
                         </div>
+                        </div>
                     </simplebar>
+                    <p class="text-center text-muted my-2 w-100"  v-if="reports.length == 0 && is_load">No data found</p>
                 </div>
-                <div class="col-xl-8 py-2">
+                <div class="col-xl-8 col-md-8 py-2">
                     <div class="card " style="height: 100%">
-                        <div class="card-header">
+                        <div class="card-header" v-if="selected_report.user.username">
                             <div class="row m-0">
                                 <div class="col-xl-4  border-right m-auto">
                                     <b-avatar class="mr-2" :src="selected_report.user.avatar"
                                               :title="selected_report.user_address"></b-avatar>
                                     <span class="address">@{{selected_report.user.username}}</span>
                                 </div>
-                                <div class="col-xl-8 m-auto">
+                                <div class="col-xl-8 col-md-12 m-auto">
                                     <ul class="row  list-inline m-0 p-0">
-                                        <li class="col-xl-3 col-md-6 col-sm-6 w-50 text-center">
+                                        <li class="col-xl-3 col-md-3 col-sm-6 w-50 text-center">
                                             <p class="mb-0">Reports</p>
                                             <h6>{{selected_report.user.count_reports}}</h6>
                                         </li>
-                                        <li class="col-xl-3 col-md-6 col-sm-6 w-50 text-center">
+                                        <li class="col-xl-3 col-md-3 col-sm-6 w-50 text-center">
                                             <p class="mb-0">Score</p>
                                             <h6>{{selected_report.user.score}}</h6>
                                         </li>
-                                        <li class="col-xl-3 col-md-6 col-sm-6 w-50 text-center">
+                                        <li class="col-xl-3 col-md-3 col-sm-6 w-50 text-center">
                                             <p class="mb-0">Programs</p>
                                             <h6>{{selected_report.user.count_programs}}</h6>
                                         </li>
-                                        <li class="col-xl-3 col-md-6 col-sm-6 w-50 text-center">
+                                        <li class="col-xl-3 col-md-3 col-sm-6 w-50 text-center">
                                             <p class="mb-0">Thanks</p>
                                             <h6>{{selected_report.user.thanks}}</h6>
                                         </li>
@@ -56,19 +63,19 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-title border-bottom mb-0 p-2">
+                        <div class="card-title border-bottom py-3  mb-0 px-2" v-if="selected_report.title">
                             <p class="text-muted float-right" style="font-size: 11px">{{selected_report.time_diff}}</p>
                             <h5>{{selected_report.title}}</h5>
                         </div>
 
-                        <div class="card-body">
+                        <div class="card-body" v-if="selected_report.title">
 
-                            <div class="row mx-0 mb-2">
-                                <b-badge style="font-size: 13px" class="p-3 mr-3 view_side"  role="button" v-b-toggle.report variant="dark">Edit Report</b-badge>
+                            <div class="row mx-0 ">
+                                <b-badge style="font-size: 13px" class="p-3 mr-3 mb-2 view_side"  role="button" v-b-toggle.report variant="dark">Edit Report</b-badge>
                                 <edit-report :selected_report="selected_report"/>
-                                <b-badge style="font-size: 13px" class="p-3 view_side" role="button" v-b-toggle.messages variant="dark">View Messages</b-badge>
+                                <b-badge style="font-size: 13px" class="p-3 mb-2 view_side" role="button" v-b-toggle.messages variant="dark">View Messages</b-badge>
                                 <report-messages/>
-                                <b-form-select class="float-right ml-auto" style="width: 160px" v-model="selected_report.status" :options="status"></b-form-select>
+                                <b-form-select class=" ml-auto mb-2" style="width: 160px" v-model="selected_report.status" :options="status"></b-form-select>
                             </div>
 
                             <div role="tablist">
@@ -82,7 +89,10 @@
                                     <b-collapse id="info" accordion="my-accordion" visible role="tabpanel">
                                         <b-card-body>
                                             <b-card-text>
-                                                <b-form-select class="float-right" style="width: 100px" v-model="selected_report.severity" :options="['none','low','medium','high','critical']"></b-form-select>
+                                                <div class="row mx-0 my-1">
+                                                    <b-form-select class="ml-auto" style="width: 100px" v-model="selected_report.severity" :options="['none','low','medium','high','critical']"></b-form-select>
+
+                                                </div>
 
                                                 <ul>
                                                     <li>Target : {{selected_report.target}}</li>
@@ -142,6 +152,10 @@
                 </div>
             </div>
         </div>
+            <div class="text-center my-4">
+                <pagination :current_page=current_page :last_page_url=last_page_url
+                            v-on:change-page="getReports"/>
+            </div>
         </div>
     </main>
 </template>
@@ -151,9 +165,11 @@
     import 'simplebar/dist/simplebar.min.css';
     import EditReport from "@/components/EditReport";
     import ReportMessages from "@/components/ReportMessages";
+    import Pagination from "@/components/structure/Pagination";
     export default {
         name: "Reports",
         components: {
+            Pagination,
             ReportMessages,
             EditReport,
             simplebar
@@ -161,9 +177,10 @@
         data() {
             return {
                 reports: [],
-                content: "<h1>Some initial content</h1>",
+                filtre_status:'',
+                filtre_type:true,
+                is_load:false,
                 status: ['new', 'needs more info', 'triaged', 'accepted', 'resolved', 'duplicate', 'informative', 'not applicable'],
-                dates: ['current day', 'this week', 'last week', 'this month', 'last month', 'this year', 'last year'],
                 current_page: 1,
                 last_page_url: 6,
                 selected_report: {
@@ -173,17 +190,28 @@
                 },
             }
         },
+        watch: {
+            filtre_status: function () {
+                this.getReports(1)
+            },
+        },
         created() {
             this.getReports(1)
         },
         methods: {
+
             getReports(page) {
+                let item = {
+                    'status':this.filtre_status,
+                    'type':this.filtre_type
+                }
                 this.$http
-                    .get('companies/'+this.$store.state.company.id+'/reports?page=' + page)
+                    .post('companies/'+this.$store.state.company.id+'/reports?page=' + page,item)
                     .then(response => {
                         console.log(response.data)
                         this.reports = response.data.data;
-                        this.selected_report = this.reports[0];
+                        this.is_load = true
+                        if(this.reports.length)this.selected_report = this.reports[0];
                         this.last_page_url = response.data.last_page;
                         this.current_page = response.data.current_page
 
@@ -191,7 +219,8 @@
                     .catch(error => {
                         console.log(error)
                     })
-            }
+            },
+
         }
     }
 </script>

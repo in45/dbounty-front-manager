@@ -80,9 +80,8 @@
 </script>
 <style scoped>
 
-    .navbar-light .navbar-brand ,.navbar-light .navbar-nav .nav-link{
+    .navbar-light .navbar-brand ,.nav-link,button,.nav-item{
         color: #eeeeee!important;
-
         font-family: "Heebo";
        font-weight: 600;
        line-height: 1.5em;
@@ -109,6 +108,7 @@
     .add {
         color: white;
         padding: 8px;
+        margin: auto;
         border-radius: 12px;
         background: #0EC9AC;
         display: flex;

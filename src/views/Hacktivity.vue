@@ -56,8 +56,12 @@
         },
         methods: {
             getHacktivities(page) {
+                let item = {
+                    'status':this.filtre_status,
+                    'type':this.filtre_type
+                }
                 this.$http
-                    .get('companies/'+this.$store.state.company.id+'/reports?page=' + page)
+                    .post('companies/'+this.$store.state.company.id+'/reports?page=' + page,item)
                     .then(response => {
                         console.log(response.data)
                         this.hacktivities = response.data.data;

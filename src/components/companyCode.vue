@@ -74,6 +74,7 @@
                     .post('companies/'+this.$store.state.company.id+'/code',{'type':type})
                     .then(response => {
                         this.item = response.data
+                        this.$alertify.success(" success")
                     })
                     .catch(error => {
                         console.log(error)

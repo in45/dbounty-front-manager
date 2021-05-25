@@ -1,12 +1,13 @@
 <template>
-    <b-sidebar id="messages"  width="400px" title="Messages" text-variant="light" right shadow>
+    <b-sidebar id="messages"  width="400px" title="Messages"
+                text-variant="light" right shadow backdrop backdrop-variant="transparent">
         <div class="px-3 py-2">
             <b-tabs pills justified content-class="pt-3">
                 <b-tab  class="border-0">
                     <template v-slot:title>
                         <span class=" d-sm-inline-block ">Manager</span>
                     </template>
-                    <simplebar style="max-height: 70vh;padding-right: 12px;padding-left: 12px;">
+                    <simplebar style="max-height: 70vh;padding-right: 12px;padding-left: 12px;" data-simplebar-auto-hide="false">
                     <div class="chat-message">
                         <ul class="chat">
                             <li class="left row mx-0 mb-2 ">

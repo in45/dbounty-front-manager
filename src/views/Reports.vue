@@ -72,10 +72,10 @@
 
                             <div class="row mx-0 ">
                                 <b-badge style="font-size: 13px" class="p-3 mr-3 mb-2 view_side"  role="button" v-b-toggle.report variant="dark">Edit Report</b-badge>
-                                <edit-report :selected_report="selected_report"/>
+                                <edit-report :selected_report_p="selected_report"/>
                                 <b-badge style="font-size: 13px" class="p-3 mb-2 view_side" role="button" v-b-toggle.messages variant="dark">View Messages</b-badge>
                                 <report-messages/>
-                                <b-form-select class=" ml-auto mb-2" style="width: 160px" v-model="selected_report.status" :options="status"></b-form-select>
+                                <b-form-select class=" ml-auto mb-2" style="width: 160px" v-model="selected_report.status" :options="status" v-on:change="update('status')"></b-form-select>
                             </div>
 
                             <div role="tablist">
@@ -90,7 +90,7 @@
                                         <b-card-body>
                                             <b-card-text>
                                                 <div class="row mx-0 my-1">
-                                                    <b-form-select class="ml-auto" style="width: 100px" v-model="selected_report.severity" :options="['none','low','medium','high','critical']"></b-form-select>
+                                                    <b-form-select class="ml-auto" style="width: 100px"  v-model="selected_report.severity" :options="['none','low','medium','high','critical']" v-on:change="update('severity')"></b-form-select>
 
                                                 </div>
 
@@ -199,6 +199,22 @@
             this.getReports(1)
         },
         methods: {
+            update(type){
+                let val = {}
+                if(type == 'severity') val.severity=this.selected_report.severity
+                if(type == 'status') val.status=this.selected_report.status
+                this.$http
+                    .post('companies/'+this.$store.state.company.id+'/reports/'+this.selected_report.id,val)
+                    .then(response => {
+                        console.log(response.data)
+                        this.$alertify.success(" success")
+                        this.selected_report = response.data;
+
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            },
 
             getReports(page) {
                 let item = {

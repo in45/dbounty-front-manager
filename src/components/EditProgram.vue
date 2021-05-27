@@ -35,7 +35,7 @@
                                 <b-form-select v-model="program.type" :options="types"></b-form-select>
                             </div>
                             <div class="col-xl-4">
-                                <label class="pb-2">Range Response (Days) :</label>
+                                <label class="pb-2">Response (Days) :</label>
                                 <b-form-select v-model="program.range_response" :options="[1,2,3,4,5,6,7]"></b-form-select>
                             </div>
                             <div class="col-xl-4">
@@ -185,7 +185,7 @@
                 formData.append('conditions', this.program.conditions);
                 if(this.$refs.file.files.length)formData.append('logo', this.$refs.file.files[0]);
                 this.$http
-                    .post('programs',formData)
+                    .post('programs/'+this.$route.params.id,formData)
                     .then(response => {
                         this.$alertify.success(" success")
                         this.$router.push({name:'ProfilProgram',params:{id:response.data.id} })

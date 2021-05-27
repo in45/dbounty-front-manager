@@ -204,7 +204,7 @@
                 if(type == 'severity') val.severity=this.selected_report.severity
                 if(type == 'status') val.status=this.selected_report.status
                 this.$http
-                    .post('companies/'+this.$store.state.company.id+'/reports/'+this.selected_report.id,val)
+                    .post('reports/'+this.selected_report.id,val)
                     .then(response => {
                         console.log(response.data)
                         this.$alertify.success(" success")

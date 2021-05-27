@@ -43,7 +43,7 @@
 
                             <td data-label="Username" class="text-left">
                                 <b-avatar :src="data.avatar" class="mx-2"/>
-                                <router-link :to="{name:'ProfilUser',params:{id:data.public_address}}"> {{data.username}}</router-link>
+                                <router-link :to="{name:'ProfilUser',params:{id:data.id}}"> {{data.username}}</router-link>
                             </td>
                             <td data-label="Score"> {{data.score}}</td>
                             <td data-label="Country"> {{data.country}}</td>

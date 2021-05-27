@@ -71,7 +71,7 @@
         methods:{
             loadEvolution() {
                 this.$http
-                    .get('companies/'+this.$store.state.company.id+'/bounty_stats')
+                    .get('bounty_stats')
                     .then(response => {
                         let evolution  = response;
                         let result = {}

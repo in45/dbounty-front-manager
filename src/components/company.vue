@@ -84,7 +84,7 @@
         },
         getCompany(){
             this.$http
-                .get('companies/'+this.$store.state.company.id)
+                .get('company')
                 .then(response => {
                     this.company = response.data;
 
@@ -98,7 +98,7 @@
 
         edit() {
             this.$http
-                .post('companies/'+this.company.id, this.company)
+                .post('company', this.company)
                 .then(response => {
                     this.company = response.data;
                     this.$store.commit('mycompany',response.data)

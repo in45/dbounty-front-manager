@@ -55,25 +55,6 @@
             }
 
         },
-        mounted () {
-            this.me();
-
-        },
-        methods:{
-
-            me() {
-                this.$http
-                    .get('me')
-                    .then(response =>{
-                        this.$store.commit('me',response.data)
-                        this.$store.commit('mycompany',response.data.company.company)
-                    })
-                    .catch(error => {
-                            console.log(error)
-                        }
-                    )
-            }
-        }
 
         }
 

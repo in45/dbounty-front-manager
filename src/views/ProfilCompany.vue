@@ -111,7 +111,7 @@
             },
             loadCompany(){
                 this.$http
-                    .get('companies/'+this.$store.state.company.id)
+                    .get('company')
                     .then(response => {
                         console.log(response.data)
                         this.company = response.data;
@@ -123,7 +123,7 @@
             },
             getManagers(){
                 this.$http
-                    .get('companies/'+this.$route.params.id+'/managers')
+                    .get('managers')
                     .then(response => {
                         console.log(response.data)
                         this.managers = response.data;
@@ -135,7 +135,7 @@
             },
             getPrograms(){
                 this.$http
-                    .get('companies/'+this.$route.params.id+'/programs')
+                    .get('programs')
                     .then(response => {
                         console.log(response.data)
                         this.programs = response.data;

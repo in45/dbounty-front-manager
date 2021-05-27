@@ -56,9 +56,9 @@
         methods:{
             loadProgramsStatus() {
                 this.$http
-                    .get('companies/'+this.$store.state.company.id+'/programs_status')
+                    .get('programs_status')
                     .then(response => {
-                        console.log("programs status",response.data)
+
                         let status = []
                         let series = []
                         response.data.forEach(function(element) {

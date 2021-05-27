@@ -55,7 +55,7 @@
         methods:{
             editReport(){
                 this.$http
-                    .post('companies/'+this.$store.state.company.id+'/reports/'+this.selected_report.id,this.selected_report)
+                    .post('reports/'+this.selected_report.id,this.selected_report)
                     .then(response => {
                         console.log(response.data)
                         this.$alertify.success(" success")

@@ -1,9 +1,9 @@
 <template>
     <b-modal id="modal-profil" centered :title="'Profil // '+manager.username" ref="modal"  title-class="font-20"
-             hide-footer hide-header-close @shown="manager = $store.state.manager" @hide="typesubmit=false">
+             hide-footer hide-header-close @shown="me" @hide="typesubmit=false">
        <div class="row p-4">
            <div class="col-xl-8">
-               <h5 class="text-warning text-center my-3">{{manager.public_address}}</h5>
+               <h6 class="text-warning text-center my-3">{{manager.public_address}}</h6>
                <div class="row mb-3">
                    <div class="col-xl-4 pt-2">First Name</div>
                    <div class="col-xl-8">
@@ -85,6 +85,18 @@
                     this.manager = response.data;
                     this.$store.commit('me',response.data)
                     this.$alertify.success("L'opération a réussi :)")
+                })
+                .catch(error => {
+                        console.log(error)
+                    }
+                )
+        },
+        me() {
+            this.$http
+                .get('me')
+                .then(response => {
+                    this.manager = response.data;
+
                 })
                 .catch(error => {
                         console.log(error)

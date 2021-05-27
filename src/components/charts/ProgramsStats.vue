@@ -69,10 +69,8 @@
         methods:{
             loadProgramsStats() {
                 this.$http
-                    .get('companies/'+this.$store.state.company.id+'/programs_stats')
+                    .get('programs_stats')
                     .then(response => {
-                        let data  = response.data;
-                        console.log("programs stats",data)
                         let labels = []
                         let users_count = []
                         let reports_count = []

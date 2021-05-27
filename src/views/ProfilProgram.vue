@@ -31,7 +31,7 @@
                 <div class="col-xl-3 p-0 border-left">
                     <p class="m-2">Begin At : {{new Date(program.begin_at).toLocaleString()}}</p>
                     <p class="m-2">Finish At : {{new Date(program.finish_at).toLocaleString()}}</p>
-                    <b-badge pill class="m-2" variant="info">Managed By DBounty</b-badge><br/>
+                    <b-badge pill class="m-2" variant="info" v-if="program.managed_by_dbounty">Managed By DBounty</b-badge><br/>
                     <b-badge pill class="m-2" variant="info">{{program.type}}</b-badge>
 
                     </div>
@@ -117,11 +117,11 @@
                                     <th scope="col">Username</th>
                                     <th scope="col">Thanks</th>
                                     <th scope="col" >Country</th>
-                                    <th scope="col" >Score</th>
+                                    <th scope="col" >Reputation</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr v-for="data in users" v-bind:key="data.user_address">
+                                <tr v-for="data in users" v-bind:key="data.user_id">
 
                                     <td data-label="#">
                                         <b-avatar :src="data.user.avatar" ></b-avatar>
@@ -132,7 +132,7 @@
                                     </td>
                                     <td data-label="Thanks "> {{data.thanks}}</td>
                                     <td data-label="country" > {{data.user.country}}</td>
-                                    <td data-label="Score" > {{data.user.score}}</td>
+                                    <td data-label="Score" > {{data.user.reputation}}</td>
 
                                 </tr>
                                 </tbody>
@@ -182,14 +182,14 @@
                     name:'',
                     company:{}
                 },
-                reports:[],
+
                 users:[]
             }
         },
         created(){
             this.loadProgram()
             this.getUsers()
-            this.getReports()
+
         },
         methods:{
             loadProgram(){
@@ -216,18 +216,7 @@
                         console.log(error)
                     })
             },
-            getReports(){
-                this.$http
-                    .get('programs/'+this.$route.params.id+'/reports')
-                    .then(response => {
 
-                        this.reports = response.data;
-
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-            },
             handleSubmit(){
 
             }

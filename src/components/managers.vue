@@ -1,6 +1,6 @@
 <template>
     <b-modal id="company-managers"  size="lg"  title="Company Managers" ref="modal"  title-class="font-20"
-             hide-footer hide-header @shown="create" >
+             hide-footer hide-header @shown="create" @hide="managers = []">
 
         <div class="row m-4">
 
@@ -20,7 +20,7 @@
                         </td>
                         <td data-label="Username " class="text-xl-left">{{data.manager.username}}</td>
                         <td data-label="Role " style="max-width: 60px">
-                            <b-form-select @change="changeRole(data.manager_address,data.manager.role)" v-model="data.manager.role" :options="['sysalpha', 'sysbeta']" ></b-form-select>
+                            <b-form-select @change="changeRole(data.manager_id,data.manager.role)" v-model="data.manager.role" :options="['sysalpha', 'sysbeta']" ></b-form-select>
                         </td>
                     </tr>
                     </tbody>
@@ -107,9 +107,9 @@
             this.addManager();
 
         },
-        changeRole(manager_address,role){
+        changeRole(manager_id,role){
             this.$http
-                .post('managers/'+manager_address,{'role':role})
+                .post('managers/'+manager_id,{'role':role})
                 .then(response => {
                     console.log(response.data);
                     this.$alertify.success("L'opération a réussi :)")
@@ -122,7 +122,7 @@
         },
         getManagers(){
             this.$http
-                .get('companies/'+this.$store.state.company.id+'/managers')
+                .get('managers')
                 .then(response => {
                     this.managers = response.data;
 
@@ -135,7 +135,7 @@
         },
         addManager(){
             this.$http
-                .post('companies/'+this.$store.state.company.id+'/invite_manager',this.new_manager)
+                .post('invite_manager',this.new_manager)
                 .then(response => {
                     this.managers.push(response.data);
                 })

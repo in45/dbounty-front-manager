@@ -61,7 +61,7 @@
                     'type':this.filtre_type
                 }
                 this.$http
-                    .post('companies/'+this.$store.state.company.id+'/reports?page=' + page,item)
+                    .post('reports?page=' + page,item)
                     .then(response => {
                         console.log(response.data)
                         this.hacktivities = response.data.data;

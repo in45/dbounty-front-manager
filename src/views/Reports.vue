@@ -21,7 +21,7 @@
                         <div class="card report  mb-3"  :class=" {'selected': selected_report.id == data.id}" v-for="data in reports" v-bind:key="data.id" @click="selected_report = data">
                             <div class="card-body ">
                                 <h6 class="link  font-size-13 link">{{data.title}}</h6>
-                                <h6 class="link text-truncate font-size-13 link">@{{data.user_address}}</h6>
+                                <h6 class="link text-truncate font-size-13 link">@{{data.user.username}}</h6>
                                 <p class="text-muted mb-0" v-if="data.vuln_id">{{data.vuln.name}}</p>
                                 <p class="text-muted mb-0" v-else>{{data.vuln_name}}</p>
                                 <b-badge class="float-right" variant="info">{{data.status}}</b-badge>
@@ -36,8 +36,7 @@
                         <div class="card-header" v-if="selected_report.user.username">
                             <div class="row m-0">
                                 <div class="col-xl-4  border-right m-auto">
-                                    <b-avatar class="mr-2" :src="selected_report.user.avatar"
-                                              :title="selected_report.user_address"></b-avatar>
+                                    <b-avatar class="mr-2" :src="selected_report.user.avatar"></b-avatar>
                                     <span class="address">@{{selected_report.user.username}}</span>
                                 </div>
                                 <div class="col-xl-8 col-md-12 m-auto">
@@ -204,7 +203,7 @@
                 if(type == 'severity') val.severity=this.selected_report.severity
                 if(type == 'status') val.status=this.selected_report.status
                 this.$http
-                    .post('companies/'+this.$store.state.company.id+'/reports/'+this.selected_report.id,val)
+                    .post('reports/'+this.selected_report.id,val)
                     .then(response => {
                         console.log(response.data)
                         this.$alertify.success(" success")
@@ -222,7 +221,7 @@
                     'type':this.filtre_type
                 }
                 this.$http
-                    .post('companies/'+this.$store.state.company.id+'/reports?page=' + page,item)
+                    .post('reports?page=' + page,item)
                     .then(response => {
                         console.log(response.data)
                         this.reports = response.data.data;

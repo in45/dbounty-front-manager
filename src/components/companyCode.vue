@@ -68,10 +68,11 @@
                 this.item={}
                 this.$refs['modal'].hide()
             },
+
             Generate(type)
             {
                 this.$http
-                    .post('companies/'+this.$store.state.company.id+'/code',{'type':type})
+                    .post('code',{'type':type})
                     .then(response => {
                         this.item = response.data
                         this.$alertify.success(" success")

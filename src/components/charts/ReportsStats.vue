@@ -1,10 +1,10 @@
 <template>
     <div class="row mx-0">
         <div class="col-xl-6">
-            <apexchart type="pie" width="420" :options="chartOptions" :series="series" v-if="series.length"></apexchart>
+            <apexchart type="pie" width="420" :options="chartOptions" :series="series" v-if="load"></apexchart>
         </div>
         <div class="col-xl-6">
-            <apexchart type="donut" width="380" :options="chartOptions2" :series="series2" v-if="series2.length"></apexchart>
+            <apexchart type="donut" width="380" :options="chartOptions2" :series="series2" v-if="load"></apexchart>
         </div>
     </div>
 
@@ -15,7 +15,8 @@
         name: "ReportsStats",
         data(){
             return{
-                series: [],
+                load:false,
+                series: [0,0,0,0,0,0,0,0],
                 chartOptions: {
                     chart: {
                         type: 'pie',
@@ -31,6 +32,7 @@
                             color:  '#fff'
                         },
                     },
+                    labels:['new','needs more info','triaged','resolved','accepted','duplicate','informative','not applicable'],
                     responsive: [{
                         breakpoint: 480,
                         options: {
@@ -43,7 +45,7 @@
                         }
                     }]
                 },
-                series2: [],
+                series2: [0,0,0,0,0],
                 chartOptions2: {
                     chart: {
                         type: 'donut',
@@ -59,6 +61,7 @@
                             color:  '#fff'
                         },
                     },
+                    labels:['none','low','medium','high','critical'],
                     responsive: [{
                         breakpoint: 480,
                         options: {
@@ -79,11 +82,10 @@
         methods:{
             loadReportsStats() {
                 this.$http
-                    .get('companies/'+this.$store.state.company.id+'/reports_stats')
+                    .get('reports_stats')
                     .then(response => {
-                        let data  = response.data;
-                        console.log("reports status",data.status)
-                        console.log("reports severity",data.severity)
+                       let data  = response.data;
+                       this.load=true
                        let status = []
                        let severity = []
                         let series = []
@@ -97,14 +99,19 @@
                             severity.push(element.severity)
                         })
 
-                        this.series=series
-                        this.series2=series2
-                        this.chartOptions = {...this.chartOptions, ...{
-                                labels: status
-                            }}
-                        this.chartOptions2 = {...this.chartOptions2, ...{
-                                labels: severity
-                            }}
+                       if(series.length){
+                           this.series=series
+                           this.chartOptions = {...this.chartOptions, ...{
+                                   labels: status
+                               }}
+                       }
+                       if(series2.length){
+                           this.series2=series2
+
+                           this.chartOptions2 = {...this.chartOptions2, ...{
+                                   labels: severity
+                               }}
+                       }
                     })
                     .catch(error => {
                         console.log(error)

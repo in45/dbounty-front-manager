@@ -90,7 +90,7 @@
 
             loadPrograms(page) {
                 this.$http
-                    .get('companies/'+this.$store.state.company.id+'/programs?page=' + page)
+                    .get('programs?page=' + page)
                     .then(response => {
                         console.log(response.data)
                         this.programs = response.data.data;
@@ -104,7 +104,7 @@
             },
             filterSearch(page) {
                 this.$http
-                    .post('companies/'+this.$store.state.company.id+'/programs/search?page=' + page,
+                    .post('programs/search?page=' + page,
                         {
                             name: this.filtre_name
                         })

@@ -24,6 +24,7 @@
                     <b-dropdown-item href="" v-b-modal.modal-profil>Profile</b-dropdown-item>
                     <b-dropdown-item href="" v-b-modal.profil-company>My Company</b-dropdown-item>
                     <b-dropdown-item href="" v-b-modal.company-managers>Managers</b-dropdown-item>
+                    <b-dropdown-item href="" v-b-modal.company-account>Manage Account</b-dropdown-item>
                     <b-dropdown-item href="#">Logout</b-dropdown-item>
                 </b-nav-item-dropdown>
 
@@ -34,6 +35,7 @@
         <profil/>
         <company/>
         <managers/>
+        <manage-account/>
     </b-navbar>
 
 
@@ -46,9 +48,10 @@
     import Profil from "@/components/profil";
     import Company from "@/components/company";
     import Managers from "@/components/managers";
+    import ManageAccount from "@/components/manageAccount";
     export default {
         name: "NavBar",
-        components: {Managers, Company, Profil},
+        components: {ManageAccount, Managers, Company, Profil},
         data(){
             return{
 

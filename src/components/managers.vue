@@ -20,15 +20,15 @@
                         </td>
                         <td data-label="Username " class="text-xl-left">{{data.manager.username}}</td>
                         <td data-label="Role " style="max-width: 60px">
-                            <b-form-select @change="changeRole(data.manager_id,data.manager.role)" v-model="data.manager.role" :options="['sysalpha', 'sysbeta']" ></b-form-select>
+                            <b-form-select :disabled="$store.state.manager.role == 'sysbeta'" @change="changeRole(data.manager_id,data.manager.role)" v-model="data.manager.role" :options="['sysalpha', 'sysbeta']" ></b-form-select>
                         </td>
                     </tr>
                     </tbody>
                 </table>
 
         </div>
-        <hr class="bg-white"/>
-        <div class="form-group mx-4">
+        <hr class="bg-white" v-if="$store.state.manager.role == 'sysalpha'"/>
+        <div class="form-group mx-4" v-if="$store.state.manager.role == 'sysalpha'">
             <label>Or add new manager</label>
             <div class="row my-3 mx-0" >
 

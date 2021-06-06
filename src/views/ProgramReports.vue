@@ -6,7 +6,7 @@
                     <div class="col-xl-4 col-md-4 border-right border-bottom">
                         <div class="row m-0 pt-2 pb-3">
                             <div class="col-5 my-auto">
-                                <b-form-checkbox v-model="filtre_type" @change="getReports(1)" switch size="sm">Assigned to me</b-form-checkbox>
+                                <b-form-checkbox :disabled="$store.state.manager.role == 'sysbeta'" v-model="filtre_type" @change="getReports(1)" switch size="sm">Assigned to me</b-form-checkbox>
                             </div>
                             <div class="col-5  ml-auto">
                                 <b-form-select v-model="filtre_status" size="sm" >

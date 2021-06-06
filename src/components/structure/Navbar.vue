@@ -14,7 +14,7 @@
             </b-navbar-nav>
 
             <b-navbar-nav class="ml-auto">
-                <b-nav-item right>
+                <b-nav-item right v-if="$store.state.manager.role == 'sysalpha'">
                     <button class="add"  @click="$router.push({name:'NewProgram'})">New Program</button>
                 </b-nav-item>
                 <b-nav-item-dropdown right>
@@ -23,9 +23,9 @@
                         <b-avatar :src="$store.state.company.logo"></b-avatar>
                     </template>
                     <b-dropdown-item href="" v-b-modal.modal-profil>Profile</b-dropdown-item>
-                    <b-dropdown-item href="" v-b-modal.profil-company>My Company</b-dropdown-item>
-                    <b-dropdown-item href="" v-b-modal.company-managers>Managers</b-dropdown-item>
-                    <b-dropdown-item href="" v-b-modal.company-account>Manage Account</b-dropdown-item>
+                    <b-dropdown-item href="" v-b-modal.profil-company >My Company</b-dropdown-item>
+                    <b-dropdown-item href="" v-b-modal.company-managers >Managers</b-dropdown-item>
+                    <b-dropdown-item href="" v-b-modal.company-account v-if="$store.state.manager.role == 'sysalpha'">Manage Account</b-dropdown-item>
                     <b-dropdown-item href="#">Logout</b-dropdown-item>
                 </b-nav-item-dropdown>
 
@@ -36,7 +36,7 @@
         <profil/>
         <company/>
         <managers/>
-        <manage-account/>
+        <manage-account v-if="$store.state.manager.role == 'sysalpha'"/>
     </b-navbar>
 
 

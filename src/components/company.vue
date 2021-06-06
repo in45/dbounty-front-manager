@@ -4,30 +4,30 @@
 
         <div class="row p-4 text-center m-auto">
             <b-avatar class="outer"  :src="company.logo" size="6rem" ></b-avatar>
-            <upload-avatar class="inner"  :url="'me/avatar'" v-on:refresh-avatar="refresh"/>
+            <upload-avatar class="inner"  v-if="$store.state.manager.role == 'sysalpha'"  :url="'me/avatar'" v-on:refresh-avatar="refresh"/>
         </div>
         <div class="row  px-4">
             <h4 class="col-9">Infos</h4>
-            <div class="col-3 text-right">
+            <div class="col-3 text-right" v-if="$store.state.manager.role == 'sysalpha'">
                 <i role="button" v-b-modal.company-code class="fa fa-lock fa-1x mr-2 text-danger"  title="code" ></i>
                 <company-code :alpha_code="company.alpha_code"  :beta_code="company.beta_code"/>
             </div>
         </div>
         <div class=" p-4">
                <div class="form-group mb-3">
-                       <b-form-input type="text" class="text-center " v-model="company.name" placeholder="change your Company Name"></b-form-input>
+                       <b-form-input type="text" :disabled="sysbeta" class="text-center " v-model="company.name" placeholder="change your Company Name"></b-form-input>
                </div>
                <div class="form-group d-flex mb-3">
                    <i class="fa fa-globe my-auto mr-3"></i>
-                       <b-form-input type="text" v-model="company.website" placeholder="change  Website"></b-form-input>
+                       <b-form-input type="text" :disabled="sysbeta" v-model="company.website" placeholder="change  Website"></b-form-input>
                </div>
                <div class="form-group  d-flex mb-3">
                    <i class="fa fa-phone my-auto mr-3"></i>
-                   <b-form-input type="text" v-model="company.phone" placeholder="change  Phone Number"></b-form-input>
+                   <b-form-input type="text" :disabled="sysbeta" v-model="company.phone" placeholder="change  Phone Number"></b-form-input>
                </div>
                <div class="form-group  d-flex mb-3">
                    <i class="fa fa-at my-auto mr-3"></i>
-                       <b-form-input type="email" v-model="company.email" placeholder="change  email"
+                       <b-form-input type="email" :disabled="sysbeta" v-model="company.email" placeholder="change  email"
                                      :class="{ 'is-invalid': typesubmit && $v.company.email.$error }"></b-form-input>
                        <div v-if="typesubmit && $v.company.email.$error" class="invalid-feedback ">
                            <span v-if="!$v.company.email.email" class="text-danger">Email Invalid !</span>
@@ -36,16 +36,16 @@
 
                <div class="form-group  d-flex mb-3">
                    <i class="flaticon-ethereum-1 my-auto mr-3"></i>
-                   <b-form-input type="text"  v-model="company.balance" disabled/></div>
+                   <b-form-input type="text"   v-model="company.balance" disabled/></div>
             <div class="form-group mb-3">
                 <div class="pt-2">Description</div>
-                <b-form-textarea rows="4" style="resize: none" type="text"  v-model="company.description" />
+                <b-form-textarea :disabled="sysbeta" rows="4" style="resize: none" type="text"  v-model="company.description" />
             </div>
 
 
        </div>
 
-        <b-button class="m-0 text-center btn-info w-100" style="border-radius:0 0 20px 20px;" @click="edit">Edit Profil</b-button>
+        <b-button v-if="$store.state.manager.role == 'sysalpha'" class="m-0 text-center btn-info w-100" style="border-radius:0 0 20px 20px;" @click="edit">Edit Profil</b-button>
 
     </b-modal>
 </template>
@@ -61,7 +61,8 @@
         data(){
             return{
                 typesubmit: false,
-                company: { }
+                company: { },
+                sysbeta:true
             }
         },
         validations: {
@@ -83,6 +84,8 @@
 
         },
         getCompany(){
+            if(this.$store.state.manager.role == 'sysbeta') this.sysbeta = true
+            if(this.$store.state.manager.role == 'sysalpha') this.sysbeta = false
             this.$http
                 .get('company')
                 .then(response => {

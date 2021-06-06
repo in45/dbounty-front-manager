@@ -74,7 +74,7 @@
                                     <b-badge style="font-size: 13px" class="p-3 mr-3 mb-2 view_side"  role="button" v-b-toggle.report variant="dark">Edit Report</b-badge>
                                     <edit-report :selected_report_p="selected_report"/>
                                     <b-badge style="font-size: 13px" class="p-3 mb-2 view_side" role="button" v-b-toggle.messages variant="dark">View Messages</b-badge>
-                                    <report-messages/>
+                                    <report-messages :id="selected_report.id"/>
                                     <b-form-select class=" ml-auto mb-2" style="width: 160px" v-model="selected_report.status" :options="status" v-on:change="update('status')"></b-form-select>
                                 </div>
 

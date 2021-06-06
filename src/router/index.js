@@ -44,6 +44,14 @@ const routes = [
                 },
             },
             {
+                path: '/messages',
+                name: 'Messages',
+                component: () => import(/* webpackChunkName: "Messages" */ '@/views/Messages'),
+                meta: {
+                    requiresAuth: true
+                },
+            },
+            {
                 path: '/programs/add',
                 name: 'NewProgram',
                 component: () => import(/* webpackChunkName: "NewProgram" */ '@/components/NewProgram'),

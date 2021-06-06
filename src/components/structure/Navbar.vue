@@ -10,6 +10,7 @@
                 <b-nav-item  :to="{name: 'Programs'}"  >Programs</b-nav-item>
                 <b-nav-item  :to="{name: 'Reports'}">Reports</b-nav-item>
                 <b-nav-item  :to="{name: 'Hacktivity'}">Hacktivity</b-nav-item>
+                <b-nav-item  :to="{name: 'Messages'}">Messages</b-nav-item>
             </b-navbar-nav>
 
             <b-navbar-nav class="ml-auto">

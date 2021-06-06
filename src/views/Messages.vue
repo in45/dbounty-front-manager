@@ -7,8 +7,8 @@
                         <b-form-select v-model="filtre_report"   class="my-2  w-100" size="sm">
                             <b-form-select-option v-for="(s,index) in reports" :value="reports_ids[index]" :key="s">{{s}}</b-form-select-option>
                         </b-form-select>
-                        <button class="btn my-2 text-white  w-100" :class=" {'selected': type == 'manager'}" @click="type = 'manager'">
-                            Manager
+                        <button class="btn my-2 text-white  w-100" :class=" {'selected': type == 'user'}" @click="type = 'user'">
+                            User
                         </button>
                         <button class="btn my-2 text-white  w-100" :class=" {'selected': type == 'admin'}" @click="type = 'admin'">
                             Admin
@@ -96,15 +96,15 @@
         },
         watch:{
             type: function () {
-              if(this.type == 'manager')  this.messages_selected = this.messages_m
+              if(this.type == 'user')  this.messages_selected = this.messages_m
               else  this.messages_selected = this.messages_a
             },
             filtre_report: function () {
-                if(this.type == 'manager')  this.messages_selected = this.messages_m
+                if(this.type == 'user')  this.messages_selected = this.messages_m
                 else  this.messages_selected = this.messages_a
             },
             messages: function () {
-                if(this.type == 'manager')  this.messages_selected = this.messages_m
+                if(this.type == 'user')  this.messages_selected = this.messages_m
                 else  this.messages_selected = this.messages_a
             },
         },
@@ -141,7 +141,7 @@
                         this.messages = response.data;
                         this.reports = [...new Set(this.messages.map(x=>x.report.title))]
                         this.reports_ids = [...new Set(this.messages.map(x=>x.report_id))]
-                        this.type = 'manager'
+                        this.type = 'user'
                         this.filtre_report = this.reports_ids[0]
 
                     })
@@ -155,8 +155,8 @@
                     type:'',
                     message:document.getElementById("my_cmt").innerText
                 }
-               if(this.type == 'manager') report_message.type = 'um'
-               if(this.type == 'admin') report_message.type = 'ua'
+               if(this.type == 'user') report_message.type = 'mu'
+               if(this.type == 'admin') report_message.type = 'ma'
 
                 this.$http
                     .post('reports/' +this.filtre_report+'/messages',report_message)

@@ -45,7 +45,6 @@
 
 <script>
 
-
     import Profil from "@/components/profil";
     import Company from "@/components/company";
     import Managers from "@/components/managers";
@@ -59,6 +58,22 @@
             }
 
         },
+        created(){
+            this.me()
+        },methods:{
+            me(){
+                this.$http
+                    .get('me')
+                    .then(response => {
+                        console.log(response.data)
+                        this.$store.commit('me',response.data)
+                    })
+                    .catch(error => {
+                        console.log(error)
+
+                    })
+            }
+        }
 
         }
 

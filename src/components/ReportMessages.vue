@@ -5,7 +5,7 @@
             <b-tabs pills justified content-class="pt-3">
                 <b-tab  class="border-0">
                     <template v-slot:title >
-                        <span class=" d-sm-inline-block " @click="type = 'manager'">Manager</span>
+                        <span class=" d-sm-inline-block " @click="type = 'user'">User</span>
                     </template>
                     <div style="max-height: 70vh;overflow-y:scroll;padding-right: 4px;padding-left: 4px;">
                         <div class="chat-message mt-2">
@@ -112,7 +112,7 @@
             return {
                 main_socket: io.connect(this.$url_websocket_main, {query: {token: localStorage.getItem('token')}}),
                 messages: [ ],
-                type:'manager'
+                type:'user'
 
             }
         },
@@ -157,8 +157,8 @@
                     type:'',
                     message:document.getElementById("my_cmt").innerText
                 }
-                if(this.type == 'manager') report_message.type = 'um'
-                if(this.type == 'admin') report_message.type = 'ua'
+                if(this.type == 'user') report_message.type = 'mu'
+                if(this.type == 'admin') report_message.type = 'ma'
 
                 this.$http
                     .post('reports/' +this.id+'/messages',report_message)

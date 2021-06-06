@@ -5,8 +5,7 @@
                 <div class="col-xl-11 m-auto">
                     <div class="row mb-5">
                         <h2 class="mb-2 col-8 text-white">Dashboard</h2>
-                        <h6 class="mb-2 col-4 text-white text-right">Balance : {{$store.state.company.balance}}</h6>
-                    </div>
+                          </div>
                     <div class="row my-2">
                         <div class="col-xl-8">
                            <reports-stats/>

@@ -9,7 +9,7 @@
                                 <b-form-checkbox v-model="filtre_type" @change="getReports(1)" switch size="sm">Assigned to me</b-form-checkbox>
                             </div>
                             <div class="col-5  ml-auto">
-                                <b-form-select v-model="filtre_status" size="sm">
+                                <b-form-select v-model="filtre_status" size="sm" >
                                     <b-form-select-option value="" disabled selected>Status</b-form-select-option>
                                     <b-form-select-option v-for="s in status" :value="s" :key="s">{{s}}</b-form-select-option>
                                     <b-form-select-option value="">all</b-form-select-option>

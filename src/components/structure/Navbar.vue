@@ -1,7 +1,8 @@
 <template>
     <b-navbar toggleable="lg" class="nav">
         <b-navbar-brand @click="$router.push({name:'LandingPage'})" class="ml-5 mr-5" style="cursor: pointer">
-            DBOUNTY
+            <img src="@/assets/images/logo.svg" class="mr-3" width="70">
+            <span class="my-auto" style="color: #c2e6ea">DBounty</span>
         </b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>

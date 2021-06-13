@@ -1,9 +1,9 @@
 <template>
-    <div class="row mr-0" style="margin-top: 10%;margin-bottom: 8%">
-        <div class="col-xl-4 m-auto ">
+    <div class="row mr-0" style="margin-top: 12vh;">
+        <div class="col-xl-5 m-auto ">
             <div class="card">
-                <div class="card-header">
-                    <h1 class="text-center text-white">DBounty</h1>
+                <div class="card-header text-center">
+                    <img src="@/assets/images/logo.svg"  width="100">
 
                 </div>
                 <div class="card-body">
@@ -33,7 +33,7 @@
                                     </div>
 
                                     <div class="mt-3">
-                                        <input type="submit"  class="btn btn-primary btn-block"  value="Login" />
+                                        <input type="submit"  class="btn btn-block"  value="Login" />
                                     </div>
                                 </form>
                                   </div>
@@ -146,7 +146,10 @@
         margin-left: 4px;
     }
 
-
+    .btn{
+        background-color: #0EC9AC;
+        color: white
+    }
 
 
 </style>

@@ -20,15 +20,15 @@
                                 <ul class="chat" v-for="data in messages_selected" :key="data.id">
                                     <li class="left row mx-0 mb-4 " v-if="data.type_user == 'to'">
                                         <div class="col-2 p-0">
-                                            <b-avatar class="m-auto"   size="4rem" v-if="data.type == 'au'" src="http://via.placeholder.com/640x480.png/008811?text=admin"></b-avatar>
-                                            <b-avatar class="m-auto"  size="4rem" v-else src="http://via.placeholder.com/640x480.png/14c9ac?text=program"></b-avatar>
+                                            <b-avatar class="m-auto"   size="4rem" v-if="data.type == 'am'" src="http://via.placeholder.com/640x480.png/008811?text=admin"></b-avatar>
+                                            <b-avatar class="m-auto"  size="4rem" v-else src="http://via.placeholder.com/640x480.png/14C9AC?text=hunter"></b-avatar>
 
                                         </div>
 
                                         <div class="chat-body col-10 ">
                                             <div class="header p-2">
-                                                <strong class="primary-font" v-if="data.type == 'mu'">Company Manager</strong>
-                                                <strong class="primary-font" v-if="data.type == 'au'">DBounty Admin</strong>
+                                                <strong class="primary-font" v-if="data.type == 'um'">Report User</strong>
+                                                <strong class="primary-font" v-if="data.type == 'am'">DBounty Admin</strong>
                                                 <small class="float-right text-muted">{{data.time_diff}}</small>
                                             </div>
                                             <p class="p-2">
@@ -39,8 +39,7 @@
                                     <li class="right mb-4" v-else>
                                         <div class="chat-body w-100">
                                             <div class="header p-2">
-                                                <strong class="primary-font" v-if="data.type == 'mu'">Company Manager</strong>
-                                                <strong class="primary-font" v-if="data.type == 'au'">DBounty Admin</strong>
+                                                <strong class="primary-font" >me</strong>
                                                 <small class="float-right text-muted">{{data.time_diff}}</small>
                                             </div>
                                             <p class="p-2">
@@ -89,22 +88,22 @@
                 reports:[],
                 reports_ids:[],
                 messages_selected:[],
-                type:'',
+                type:'user',
                 filtre_report:'',
 
             }
         },
         watch:{
             type: function () {
-              if(this.type == 'user')  this.messages_selected = this.messages_m
+              if(this.type == 'user')  this.messages_selected = this.messages_u
               else  this.messages_selected = this.messages_a
             },
             filtre_report: function () {
-                if(this.type == 'user')  this.messages_selected = this.messages_m
+                if(this.type == 'user')  this.messages_selected = this.messages_u
                 else  this.messages_selected = this.messages_a
             },
             messages: function () {
-                if(this.type == 'user')  this.messages_selected = this.messages_m
+                if(this.type == 'user')  this.messages_selected = this.messages_u
                 else  this.messages_selected = this.messages_a
             },
         },
@@ -120,7 +119,7 @@
             this.getMessages()
         },
         computed: {
-            messages_m: function () {
+            messages_u: function () {
                 let a = this.messages.filter(m => {
                     return (m.type == 'mu' || m.type == 'um') && m.report_id == this.filtre_report
                 });
@@ -128,7 +127,7 @@
             },
             messages_a: function () {
                 let a = this.messages.filter(m => {
-                    return (m.type == 'au' || m.type == 'ua') && m.report_id == this.filtre_report
+                    return (m.type == 'ma' || m.type == 'am') && m.report_id == this.filtre_report
                 });
                 return a.reverse()
             },

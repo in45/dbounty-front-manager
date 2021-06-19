@@ -16,6 +16,7 @@ import '@/assets/font/flaticon.css'
 Vue.config.productionTip = false
 
 Vue.prototype.$url_api = 'http://localhost:8000/api/'
+Vue.prototype.$url_websocket_main = 'http://localhost:5000/'
 Vue.prototype.$http =  axios.create({
   baseURL: Vue.prototype.$url_api,
   headers: { "Content-Type": "application/json"}

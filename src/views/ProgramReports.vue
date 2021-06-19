@@ -70,12 +70,15 @@
 
                             <div class="card-body" v-if="selected_report.title">
 
-                                <div class="row mx-0 ">
+                                <div class="row mx-0 " v-if="$store.state.manager.role == 'sysalpha' || $store.state.manager.id == selected_report.assigned_to_manager">
                                     <b-badge style="font-size: 13px" class="p-3 mr-3 mb-2 view_side"  role="button" v-b-toggle.report variant="dark">Edit Report</b-badge>
                                     <edit-report :selected_report_p="selected_report"/>
-                                    <b-badge style="font-size: 13px" class="p-3 mb-2 view_side" role="button" v-b-toggle.messages variant="dark">View Messages</b-badge>
+                                    <b-badge style="font-size: 13px" class="p-3 mr-3 mb-2 view_side" role="button" v-b-toggle.messages variant="dark">View Messages</b-badge>
                                     <report-messages :id="selected_report.id"/>
-                                    <b-form-select class=" ml-auto mb-2" style="width: 160px" v-model="selected_report.status" :options="status" v-on:change="update('status')"></b-form-select>
+                                    <b-form-select class=" mb-2" style="width: 200px" v-model="selected_report.assigned_to_manager" v-on:change="assign" v-if="$store.state.manager.role == 'sysalpha'">
+                                        <b-form-select-option v-for="m in managers" :key="m.id" :value="m.id">{{m.username}}</b-form-select-option>
+                                    </b-form-select>
+                                    <b-form-select class=" ml-auto mb-2" style="width: 160px" v-model="selected_report.status" :options="status" v-on:change="update('status')" ></b-form-select>
                                 </div>
 
                                 <div role="tablist">
@@ -90,7 +93,7 @@
                                             <b-card-body>
                                                 <b-card-text>
                                                     <div class="row mx-0 my-1">
-                                                        <b-form-select class="ml-auto" style="width: 100px" v-model="selected_report.severity" :options="['none','low','medium','high','critical']" v-on:change="update('severity')"></b-form-select>
+                                                        <b-form-select class="ml-auto" style="width: 100px" v-model="selected_report.severity" :options="['none','low','medium','high','critical']" v-on:change="update('severity')" :disabled="$store.state.manager.role != 'sysalpha' && selected_report.assigned_to_manager != $store.state.manager.id"></b-form-select>
 
                                                     </div>
 
@@ -188,7 +191,9 @@
                     program: {},
                     vuln: {}
                 },
+                managers:[]
             }
+
         },
         watch: {
             filtre_status: function () {
@@ -197,8 +202,35 @@
         },
         created() {
             this.getReports(1)
+            this.getManagers()
         },
         methods: {
+            getManagers(){
+                this.$http
+                    .get('managers')
+                    .then(response => {
+                        this.managers = [...new Set(response.data.map(x=>x.manager))];
+
+
+                    })
+                    .catch(error => {
+                            console.log(error)
+                        }
+                    )
+            },
+            assign(){
+                this.$http
+                    .post('reports/'+this.selected_report.id+'/assign',{'manager_id':this.selected_report.assigned_to_manager})
+                    .then(response => {
+                        console.log(response.data)
+                        this.$alertify.success(" success")
+                        this.selected_report = response.data;
+
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            },
             update(type){
                 let val = {}
                 if(type == 'severity') val.severity=this.selected_report.severity

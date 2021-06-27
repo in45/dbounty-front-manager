@@ -46,8 +46,8 @@
                                             <h6>{{selected_report.user.count_reports}}</h6>
                                         </li>
                                         <li class="col-xl-3 col-md-3 col-sm-6 w-50 text-center">
-                                            <p class="mb-0">Score</p>
-                                            <h6>{{selected_report.user.score}}</h6>
+                                            <p class="mb-0">Reputation</p>
+                                            <h6>{{selected_report.user.reputation}}</h6>
                                         </li>
                                         <li class="col-xl-3 col-md-3 col-sm-6 w-50 text-center">
                                             <p class="mb-0">Programs</p>
@@ -159,6 +159,7 @@
                             v-on:change-page="getReports"/>
             </div>
         </div>
+        <bounty v-on:bounty="getBounty"/>
     </main>
 </template>
 
@@ -168,9 +169,11 @@
     import EditReport from "@/components/EditReport";
     import ReportMessages from "@/components/ReportMessages";
     import Pagination from "@/components/structure/Pagination";
+    import Bounty from "@/components/bounty";
     export default {
         name: "Reports",
         components: {
+            Bounty,
             Pagination,
             ReportMessages,
             EditReport,
@@ -229,12 +232,21 @@
                         console.log(error)
                     })
             },
+            getBounty(b){
+                console.log("ab")
+                console.log(b)
+                this.selected_report.bounty_win = b
+                this.update('bounty_win')
+            },
+
 
             update(type){
                 let val = {}
                 if(type == 'severity') val.severity=this.selected_report.severity
                 if(type == 'status') val.status=this.selected_report.status
-                this.$http
+                if(type == 'bounty_win') val.bounty_win=this.selected_report.bounty_win
+                if(this.selected_report.status == 'accepted') this.$root.$emit('bv::show::modal', 'bounty')
+                 this.$http
                     .post('reports/'+this.selected_report.id,val)
                     .then(response => {
                         console.log(response.data)

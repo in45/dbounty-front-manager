@@ -46,15 +46,21 @@
                     </div>
                     <div class="form-group row mt-3 mb-0">
 
-                            <div class="col-xl-6">
+                            <div class="col-xl-4">
                                 <label class="pb-2">Min Bounty :</label>
                                 <b-form-input type="number" min="0" :max="program.max_bounty" v-model="program.min_bounty"></b-form-input>
                             </div>
-                            <div class="col-xl-6">
+                            <div class="col-xl-4">
                                 <label class="pb-2">Max Bounty:</label>
                                 <b-form-input type="number" :min="program.min_bounty" v-model="program.max_bounty"></b-form-input>
                             </div>
-
+                        <div class="col-xl-4">
+                            <label class="pb-2">Managed By:</label>
+                            <b-form-select v-model="program.managed_by_dbounty">
+                                <b-form-select-option value="1">DBounty</b-form-select-option>
+                                <b-form-select-option value="0">Company</b-form-select-option>
+                            </b-form-select>
+                        </div>
 
                     </div>
 
@@ -150,6 +156,7 @@
                 formData.append('info', this.program.info);
                 formData.append('type', this.program.type);
                 formData.append('range_response', this.program.range_response);
+                formData.append('managed_by_dbounty', this.program.managed_by_dbounty);
                 formData.append('begin_at', this.program.begin_at);
                 formData.append('min_bounty', this.program.min_bounty);
                 formData.append('max_bounty', this.program.max_bounty);

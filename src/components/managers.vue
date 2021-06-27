@@ -16,11 +16,11 @@
                     <tbody>
                     <tr v-for="data of managers" :key="data.id">
                         <td data-label="#">
-                            <b-avatar :src="data.manager.avatar"></b-avatar>
+                            <b-avatar :src="data.avatar"></b-avatar>
                         </td>
-                        <td data-label="Username " class="text-xl-left">{{data.manager.username}}</td>
+                        <td data-label="Username " class="text-xl-left">{{data.username}}</td>
                         <td data-label="Role " style="max-width: 60px">
-                            <b-form-select :disabled="$store.state.manager.role == 'sysbeta'" @change="changeRole(data.manager_id,data.manager.role)" v-model="data.manager.role" :options="['sysalpha', 'sysbeta']" ></b-form-select>
+                            <b-form-select :disabled="$store.state.manager.role == 'sysbeta'" @change="changeRole(data.id,data.role)" v-model="data.role" :options="['sysalpha', 'sysbeta']" ></b-form-select>
                         </td>
                     </tr>
                     </tbody>
@@ -124,7 +124,7 @@
             this.$http
                 .get('managers')
                 .then(response => {
-                    this.managers = response.data;
+                    this.managers = [...new Set(response.data.map(x=>x.manager))];
 
 
                 })
@@ -138,6 +138,7 @@
                 .post('invite_manager',this.new_manager)
                 .then(response => {
                     this.managers.push(response.data);
+                    this.$alertify.success("L'opération a réussi :)")
                 })
                 .catch(error => {
                         console.log(error)

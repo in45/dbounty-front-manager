@@ -42,7 +42,8 @@ body::-webkit-scrollbar-thumb {
 body {
   scrollbar-width: thin;
   scrollbar-color: var(--thumbBG) var(--scrollbarBG);
-  background-color: #00142CF5!important;
+  background-color: #00142C!important;
+
 }
 
 
